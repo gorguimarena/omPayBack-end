@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();
+            $table->uuid();
+            $table->foreignUlid('user_id')->constrained();
             $table->timestamps();
         });
     }

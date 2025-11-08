@@ -9,19 +9,42 @@ services:
       - .:/var/www
     ports:
       - "9000:9000"
+    networks:
+      - network_om_pay
     depends_on:
       - db
   db:
     image: postgres:15
-    container_name: back_end_postgres_db_
+    container_name: ${DB_HOST}
     environment:
-      POSTGRES_DB: laravel_api
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgdata_om_pay:/var/lib/postgresql/data
+    networks:
+      - network_om_pay
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - .:/var/www 
+    networks:
+      - network_om_pay
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
 
 volumes:
-  pgdata:
+  pgdata_om_pay:
+  jenkins_home:
+
+networks:
+  network_om_pay:

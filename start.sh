@@ -12,11 +12,11 @@ if [ -z "$APP_KEY" ] || [ "$APP_KEY" = "base64:" ]; then
     php artisan key:generate
 fi
 
-# Install Passport keys if they don't exist
-if [ ! -f "app/secrets/oauth/oauth-private.key" ]; then
-    echo "Installing Passport keys..."
-    php artisan passport:install --force
-fi
+# # Install Passport keys if they don't exist
+# if [ ! -f "app/secrets/oauth/oauth-private.key" ]; then
+#     echo "Installing Passport keys..."
+#     php artisan passport:install --force
+# fi
 
 
 # Set correct permissions for Passport keys
@@ -52,8 +52,8 @@ php artisan db:seed --force
 # php artisan queue:work --queue=notifications --tries=3 --timeout=90 --sleep=3 --max-jobs=1000 > storage/logs/worker.log 2>&1 &
 
 # Generate API documentation
-echo "Generating API documentation..."
-php artisan l5-swagger:generate
+# echo "Generating API documentation..."
+# php artisan l5-swagger:generate
 
 # Clear and cache config
 echo "Clearing and caching configuration..."
