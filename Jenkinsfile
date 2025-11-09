@@ -24,10 +24,10 @@ pipeline {
             steps {
                 script {
                     echo 'Construction des images Docker...'
-                    sh 'docker-compose build'
+                    sh 'docker compose build'
 
                     echo 'Lancement des conteneurs...'
-                    sh 'docker-compose up -d'
+                    sh 'docker compose up -d'
 
                     echo 'Attente du démarrage des services...'
                     sh 'sleep 30'
@@ -38,14 +38,14 @@ pipeline {
         stage('Run Laravel Tests') {
             steps {
                 echo 'Exécution des tests unitaires Laravel...'
-                sh 'docker-compose exec -T app php artisan test'
+                sh 'docker compose exec -T app php artisan test'
             }
         }
 
         stage('Stop and Clean Containers') {
             steps {
                 echo 'Nettoyage des conteneurs Docker...'
-                sh 'docker-compose down'
+                sh 'docker compose down'
             }
         }
     }
@@ -54,7 +54,7 @@ pipeline {
 
         always {
             echo 'Nettoyage complet des volumes Docker...'
-            sh 'docker-compose down -v'
+            sh 'docker compose down -v'
         }
 
         success {
