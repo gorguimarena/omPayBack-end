@@ -2,17 +2,27 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ServicePartenaire extends Model
 {
     /** @use HasFactory<\Database\Factories\ServicePartenaireFactory> */
-    use HasFactory, HasUlids;
+    use HasFactory, HasUuids;
 
-    public function client() : BelongsTo {
-        return $this->belongsTo(Client::class);
-    }
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'nom',
+        'api_url',
+        'api_key'
+    ];
 }

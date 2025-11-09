@@ -3,23 +3,59 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Compte extends Model
 {
     /** @use HasFactory<\Database\Factories\CompteFactory> */
-    use HasFactory, HasUlids;
+    use HasFactory, HasUuids;
 
-    protected function solde(): Attribute {
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'client_id',
+        'telephone',
+    ];
+
+    protected function solde(): Attribute
+    {
         return Attribute::make(
-            get: fn() => null
+            get: function () {
+                $debits = $this->sentTransactions()->where('type', 'debit')->sum('montant');
+                $credits = $this->receivedTransactions()->where('type', 'credit')->sum('montant');
+                return $credits - $debits;
+            }
         );
     }
 
-    public function transactions() : HasMany {
+    public function transactions(): HasMany
+    {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function sentTransactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function receivedTransactions(): HasMany
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class, 'client_id');
     }
 }

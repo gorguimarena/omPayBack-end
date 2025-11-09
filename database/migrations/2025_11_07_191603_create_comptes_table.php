@@ -11,8 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('service_partenaires', function (Blueprint $table) {
-            $table->uuid();
+        Schema::create('comptes', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->foreignUuid('client_id')->constrained('clients');
+            $table->string('telephone');
             $table->timestamps();
         });
     }
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('service_partenaires');
+        Schema::dropIfExists('comptes');
     }
 };

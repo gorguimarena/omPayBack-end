@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
-            $table->uuid();
-            $table->foreignUlid('sender_compte_id')->constrained('comptes');
-            $table->foreignUlid('destinataire_id')->constrained('comptes');
+        Schema::create('service_partenaires', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('nom');
+            $table->string('api_url');
+            $table->string('api_key');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('service_partenaires');
     }
 };
