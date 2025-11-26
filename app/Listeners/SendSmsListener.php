@@ -3,11 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\CreateCompteEven;
+use App\Jobs\SendSmsJob;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
-class SendSmsListener
+class SendSmsListener implements ShouldQueue
 {
+    use InteractsWithQueue;
+
     /**
      * Create the event listener.
      */
@@ -21,6 +24,6 @@ class SendSmsListener
      */
     public function handle(CreateCompteEven $event): void
     {
-        //
+        SendSmsJob::dispatch($event->compte->telephone, 'Ahoy 👋');
     }
 }

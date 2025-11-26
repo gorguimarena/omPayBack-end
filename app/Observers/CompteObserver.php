@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Events\CreateCompteEven;
 use App\Models\Compte;
 
 class CompteObserver
@@ -11,7 +12,7 @@ class CompteObserver
      */
     public function created(Compte $compte): void
     {
-        //
+        event(new CreateCompteEven($compte));
     }
 
     /**

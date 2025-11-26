@@ -16,17 +16,14 @@ class ClientSeeder extends Seeder
         $clients = [
             [
                 'name' => 'Client User 1',
-                'email' => 'client1@ompay.com',
                 'password' => bcrypt('password'),
             ],
             [
                 'name' => 'Client User 2',
-                'email' => 'client2@ompay.com',
                 'password' => bcrypt('password'),
             ],
             [
                 'name' => 'Client User 3',
-                'email' => 'client3@ompay.com',
                 'password' => bcrypt('password'),
             ],
         ];
@@ -34,7 +31,6 @@ class ClientSeeder extends Seeder
         foreach ($clients as $clientData) {
             $user = \App\Models\User::create(array_merge([
                 'name' => $clientData['name'],
-                'email' => $clientData['email'],
                 'password' => $clientData['password'],
             ], ['id' => Str::uuid()]));
             \App\Models\Client::create([

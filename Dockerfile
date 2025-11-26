@@ -20,8 +20,8 @@ FROM php:8.3-fpm-alpine
 # Installer les extensions PHP nécessaires et bash pour Render
 RUN apk add --no-cache postgresql-dev bash \
     && apk add --no-cache bash zlib-dev gcc musl-dev make autoconf g++ \
-    && pecl install mongodb \
-    && docker-php-ext-enable mongodb \
+    && pecl install mongodb redis \
+    && docker-php-ext-enable mongodb redis \
     && docker-php-ext-install pdo pdo_pgsql
 
 # Créer un utilisateur non-root

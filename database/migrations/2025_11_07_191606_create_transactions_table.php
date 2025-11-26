@@ -16,9 +16,11 @@ return new class extends Migration
             $table->foreignUuid('sender_compte_id')->constrained('comptes');
             $table->foreignUuid('receiver_client_id')->nullable()->constrained('comptes');
             $table->foreignUuid('receiver_partenaire_id')->nullable()->constrained('service_partenaires');
+            $table->foreignUuid('receiver_marchant_id')->nullable()->constrained('marchants');
             $table->decimal('montant', 15, 2);
-            $table->enum('type', ['depot', 'retrait', 'transfert']);
+            $table->enum('type', ['depot', 'retrait', 'transfert', 'achat']);
             $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
+            $table->foreignUuid('agent_id')->nullable()->constrained('agents')->onDelete('cascade');
             $table->timestamps();
         });
     }

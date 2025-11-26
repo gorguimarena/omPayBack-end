@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('client_id')->constrained('clients');
             $table->string('telephone');
+            $table->string('pin')->nullable();
             $table->timestamps();
         });
     }

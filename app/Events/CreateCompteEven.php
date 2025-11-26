@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Compte;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,12 +15,14 @@ class CreateCompteEven
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $compte;
+
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Compte $compte)
     {
-        //
+        $this->compte = $compte;
     }
 
     /**

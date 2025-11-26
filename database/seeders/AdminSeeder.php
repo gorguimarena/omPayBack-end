@@ -16,12 +16,10 @@ class AdminSeeder extends Seeder
         $admins = [
             [
                 'name' => 'Admin User 1',
-                'email' => 'admin1@ompay.com',
                 'password' => bcrypt('password'),
             ],
             [
                 'name' => 'Admin User 2',
-                'email' => 'admin2@ompay.com',
                 'password' => bcrypt('password'),
             ],
         ];

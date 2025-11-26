@@ -27,6 +27,17 @@ services:
     networks:
       - network_om_pay
 
+  redis:
+    image: redis:7
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - network_om_pay
+    command: redis-server --appendonly yes
+
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
@@ -45,6 +56,7 @@ services:
 volumes:
   pgdata_om_pay:
   jenkins_home:
+  redis_data:
 
 networks:
   network_om_pay:

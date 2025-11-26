@@ -15,11 +15,21 @@ class CompteSeeder extends Seeder
     {
         $clients = \App\Models\Client::all();
 
+        if ($clients->isNotEmpty()) {
+            \App\Models\Compte::create([
+                'id' => Str::uuid(),
+                'client_id' => $clients->first()->id,
+                'telephone' => '+221776525959',
+                'pin' => '1234', 
+            ]);
+        }
+
         foreach ($clients as $client) {
             \App\Models\Compte::create([
                 'id' => Str::uuid(),
                 'client_id' => $client->id,
-                'telephone' => '+221' . rand(700000000, 799999999), // Random Senegalese phone number
+                'telephone' => '+221' . rand(700000000, 799999999),
+                'pin' => '1234', 
             ]);
         }
     }
